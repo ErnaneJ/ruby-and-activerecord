@@ -1,5 +1,3 @@
-# Ruby & ActiveRecord (sem Rails) 🚀
-
 > Recentemente, tive contato com alguns novos entusiastas do Ruby que provavelmente em breve estarão explorando o Rails, dado o caminho que estão seguindo. Acredito que, uma vez que tenhamos uma compreensão básica de Ruby e a linguagem devidamente instalada, é vantajoso explorarmos o Active Record, uma poderosa gem que simplifica significativamente as operações no banco de dados. Dedico este conteúdo a vocês.
 
 ## Introdução 🎉
