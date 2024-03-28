@@ -4,7 +4,7 @@
 
 ## Introdução 🎉
 
-A gem Ruby ActiveRecord é uma ferramenta poderosa que oferece abstrações simplificadas para interagir com bancos de dados, permitindo uma troca fácil do back-end do banco de dados, por exemplo, migrando de SQLite3 para MySQL sem a necessidade de alterar o código. Esta gem possui suporte integrado para abstrações de banco de dados para SQLite3, MySQL e PostgreSQL, e uma das suas principais vantagens é a necessidade mínima de configuração. Embora o ActiveRecord seja amplamente utilizado com o framework Ruby-on-Rails, ele também pode ser empregado com o Sinatra ou até mesmo de forma independente, sem qualquer estrutura web. Aqui iremos nos concentrar em demonstrar o uso do ActiveRecord de forma autônoma, fora de qualquer estrutura específica. 🌟
+A *gem* Ruby `ActiveRecord` é uma ferramenta poderosa que oferece abstrações simplificadas para interagir com bancos de dados, permitindo uma troca fácil do *back-end* do banco de dados, por exemplo, migrando de `SQLite3` para `MySQL` sem a necessidade de alterar o código. Esta gem possui suporte integrado para abstrações de banco de dados para `SQLite3`, `MySQL` e `PostgreSQL`, e uma das suas principais vantagens é a necessidade mínima de configuração. Embora o `ActiveRecord` seja amplamente utilizado com o framework [Ruby-on-Rails](https://rubyonrails.org/), ele também pode ser empregado com o Sinatra ou até mesmo de forma independente, sem qualquer estrutura web. Aqui iremos nos concentrar em demonstrar o uso do `ActiveRecord` de forma autônoma, fora de qualquer estrutura específica. 🌟
 
 ## Preparando o Projeto 🛠️
 
@@ -44,7 +44,7 @@ Entretanto, neste tutorial, utilizaremos o `Gemfile` para organizar as dependên
 bundle add activerecord
 ```
 
-Você também pode adicionar diretamente ao seu Gemfile. Ele ficará semelhante ao conteúdo abaixo:
+Você também pode adicionar diretamente ao seu `Gemfile`. Ele ficará semelhante ao conteúdo abaixo:
 
 ```gemfile
 # frozen_string_literal: true
@@ -69,7 +69,7 @@ ri ActiveRecord::Base
 
 ## Estabelecendo Conexão com o Banco de Dados 🎲
 
-Antes de utilizar qualquer modelo, é essencial estabelecer uma conexão com o banco de dados. Como mencionado anteriormente, há uma grande praticidade em conectar uma aplicação ao ActiveRecord com diferentes tipos de banco de dados, como SQLite3, MySQL ou PostgreSQL, por exemplo. Abaixo, apresento exemplos para três adaptadores diferentes:
+Antes de utilizar qualquer modelo, é essencial estabelecer uma conexão com o banco de dados. Como mencionado anteriormente, há uma grande praticidade em conectar uma aplicação ao `ActiveRecord` com diferentes tipos de banco de dados, como `SQLite3`, `MySQL` ou `PostgreSQL`, por exemplo. Abaixo, apresento exemplos para três adaptadores diferentes:
 
 ```ruby
 require 'active_record'
@@ -103,7 +103,7 @@ Para este tutorial, estaremos utilizando o SQLite, mas você pode optar por qual
 
 ### Instalando a Gem SQLite3 🪶
 
-Para utilizar o adaptador SQLite3, é necessário instalar a gem correspondente. Assim como fizemos anteriormente com o ActiveRecord, faremos o mesmo processo para instalar essa gem. Nosso Gemfile ficará assim:
+Para utilizar o adaptador `SQLite3`, é necessário instalar a gem correspondente. Assim como fizemos anteriormente com o `ActiveRecord`, faremos o mesmo processo para instalar essa *gem*. Nosso `Gemfile` ficará assim:
 
 ```ruby
 # frozen_string_literal: true
@@ -138,7 +138,7 @@ database: './database/database.sqlite3'
 
 > ℹ️ Estamos armazenando o banco de dados no caminho `./database/database.db`. Se necessário, altere esse caminho ou crie a pasta 'database' na raiz do projeto.
 
-Com isso, a conexão está estabelecida. Para testá-la, basta executar o `initializer.rb` com o seguinte comando:
+Com isso, a conexão está estabelecida. Para testá-la, basta executar o `initializer.rb` da seguinte forma:
 
 ```basg
 ruby ./configurations/initializer.rb
@@ -148,7 +148,7 @@ Se não houver erros, estamos no caminho certo!
 
 ## Criando um Modelo 🧑🏼‍💻
 
-Para criar um modelo, basta criar uma classe e herdar da classe `ActiveRecord::Base`. Os nomes das tabelas são assumidos com base no nome da classe do modelo que está sendo criado. Por exemplo, um modelo chamado `User` espera ter uma tabela chamada `users`. Um modelo chamado `PremiumUser` espera uma tabela chamada `premium_users`. Ele converte tudo para minúsculas e adiciona um sublinhado entre as palavras em maiúsculas.
+Para criar um modelo, basta criar a classe desejada herdando de `ActiveRecord::Base`. Os nomes das tabelas são assumidos com base no nome da classe do modelo que está sendo criado. Por exemplo, um modelo chamado `User` espera ter uma tabela chamada `users`. Um modelo chamado `ProfileUser` espera uma tabela chamada `profile_users`. Ele converte tudo para minúsculas e adiciona um sublinhado entre as palavras em maiúsculas.
 
 Para uma melhor organização, criaremos uma pasta adicional na raiz do projeto, onde guardaremos todas as nossas models. Para começarmos, vamos criar uma model de User.
 
@@ -158,7 +158,7 @@ class User < ActiveRecord::Base
 end
 ```
 
-Tecnicamente, isso é tudo que você precisa fazer. Por padrão, ele mapeará os campos existentes do banco de dados para atributos no modelo. Você não precisa definir cada campo no código-fonte. Ele criará campos automaticamente com base nas colunas do banco de dados. No entanto, se desejar, você pode sobrescrever propriedades como o nome da tabela e a chave primária (por sua conta e risco 😬).
+Tecnicamente, isso é tudo que você precisa fazer. Por padrão, ele mapeará os campos existentes do banco de dados para atributos no modelo. Você não precisa definir cada campo no código. No entanto, se desejar, você pode sobrescrever propriedades como o nome da tabela e a chave primária — *por sua conta e risco* 😬.
 
 ```ruby
 # ./models/user.rb
@@ -180,8 +180,8 @@ require './configurations/initializer.rb'
 require './models/user'
 
 User.create(
-    name: 'Ernane', 
-    age: 16
+  name: 'Ernane', 
+  age: 16
 )
 ```
 
@@ -195,7 +195,7 @@ ruby main.rb
 
 Você pode notar que recebeu um erro porque nossa tabela `users` não existe no banco de dados ainda. Isso ocorre porque, como mencionado, o `ActiveRecord` realiza o mapeamento dos atributos do banco de dados em métodos da classe modelo correspondente. Se a tabela não existir, ocorrerá o erro que você deve estar vendo agora.
 
-Para criar a tabela, você pode executar a criação manualmente no SQL. Por exemplo:
+Para criar a tabela, você pode executar a criação manualmente em SQL. Por exemplo:
 
 ```sql
 CREATE TABLE IF NOT EXISTS users (name TEXT, age INT);
@@ -236,7 +236,7 @@ ruby ./database/migrations/create_user_table.rb
 
 ## Uso do ActiveRecord 🤩
 
-Agora que tudo está pronto, podemos executar novamente nosso arquivo principal. Como agora temos a tabela criada, o erro anterior desaparecerá e poderemos realizar nossas primeiras manipulações com o Active Record.
+Agora que tudo está pronto, podemos executar novamente nosso arquivo principal. Como agora temos a tabela criada, o erro anterior desaparecerá e poderemos realizar nossas primeiras manipulações com o `ActiveRecord`.
 
 ### Listando Colunas da Tabela 📋
 
@@ -264,20 +264,20 @@ Aqui estão alguns exemplos de como isso é feito:
 # ./examples/creating_new_records.rb
 
 # Criar um novo objeto de usuário e então salvá-lo para armazenar no banco de dados
-user = User.new(name: 'ErnaneDois', age: 16, email: 'teste@teste.com', admin: false, tshirt_size: 'M')
+user = User.new(name: 'ErnaneDois', age: 16, email: 'teste0@teste.com', admin: false, tshirt_size: 'M')
 user.save
 
 # Usar um bloco para preencher o objeto e então salvar
 User.new do |u|
   u.name = 'ErnaneUm'
   u.age = 18
-  u.email = 'teste@teste.com'
+  u.email = 'teste1@teste.com'
   u.admin = false
   u.tshirt_size = 'M'
 end.save
 
 # Criar e salvar em uma única etapa com ".create()"
-User.create(name: 'ErnaneTres', age: 18, email: 'teste@teste.com', admin: false, tshirt_size: 'M')
+User.create(name: 'ErnaneTres', age: 18, email: 'teste2@teste.com', admin: false, tshirt_size: 'M')
 ```
 
 ### Encontrando Registros
@@ -316,8 +316,6 @@ puts usuario.name
 adultos = User.where('age > ?', 18)
 puts "Adultos: #{adultos.length}"
 
-# ./examples/finding_records.rb
-
 # Obter todos os usuários
 puts "Total de usuários: #{User.all.length}"
 
@@ -342,7 +340,7 @@ Acesse o [Guia do Ruby](https://guides.rubyonrails.org/active_record_querying.ht
 
 ### Atualizando Registros
 
-Para atualizar um registro, você também tem algumas opções. Uma delas é obter o registro, modificá-lo e, em seguida, chamá-lo explicitamente. Outra opção é chamar o método `update()` para fazer a alteração e salvar em uma única ação. Aqui estão alguns exemplos:
+Para atualizar um registro, você também tem algumas opções. Uma delas é obter o registro, modificá-lo e, em seguida, chamá-lo explicitamente. Outra opção é chamar o método `update()` para fazer a alteração e salvar em uma única ação.
 
 ```ruby
 # ./examples/updating_records.rb
@@ -355,8 +353,6 @@ usuario.save
 # Atualizar e salvar em uma única etapa
 User.first.update(name: 'nomeNovo')
 ```
-
-Isso atualizará o registro com o novo nome especificado.
 
 ### Excluindo Registros
 
@@ -372,13 +368,9 @@ User.all.each { |usuario| usuario.delete } # ou ainda => User.all.each(&:delete)
 User.delete_all
 ```
 
-> Por qual motivo você acredita que o `.delete_all` é mais eficiente? Coloca aqui nos comentários.
-
-Isso excluirá todos os registros da tabela de usuários.
-
 ### Funções de Retorno de Chamada
 
-Existem vários métodos que você pode adicionar em uma classe de modelo que serão acionados automaticamente quando determinadas ações forem executadas, como criar, atualizar ou excluir um registro, além de consultar um registro.
+Existem vários métodos que você pode adicionar em modelo que serão acionados automaticamente quando determinadas ações forem executadas, como `criar`, `atualizar` ou `excluir` um registro, além de `consultar` um registro.
 
 Saiba mais sobre retornos de chamada em [Ruby on Rails Guides](https://guides.rubyonrails.org/active_record_callbacks.html#available-callbacks).
 
@@ -386,32 +378,32 @@ Esses métodos de retorno de chamada podem ser classificados em diferentes categ
 
 #### Ações de Criação:
 
-- `before_create()`
-- `after_create()`
+- `before_create`
+- `after_create`
 
 #### Ações de Criação e Atualização:
 
-- `before_validation()`
-- `after_validation()`
-- `before_update()`
-- `after_update()`
-- `before_save()`
-- `after_save()`
+- `before_validation`
+- `after_validation`
+- `before_update`
+- `after_update`
+- `before_save`
+- `after_save`
 
 #### Ação de Exclusão:
 
-- `before_destroy()`
-- `after_destroy()`
+- `before_destroy`
+- `after_destroy`
 
 #### Ações de Criação, Atualização e Exclusão:
 
-- `after_commit()`
-- `after_rollback()`
+- `after_commit`
+- `after_rollback`
 
 #### Ações de Consulta:
 
-- `after_initialize()`
-- `after_find()`
+- `after_initialize`
+- `after_find`
 
 Aqui está um exemplo de como configurar um retorno de chamada usando blocos:
 
@@ -429,7 +421,7 @@ class User < ActiveRecord::Base
 end
 ```
 
-Outra maneira é especificar as funções de retorno de chamada a serem chamadas usando `symbols`, operando em `self`:
+Outra maneira é especificar as funções de retorno de chamada a serem executadas usando `symbols`, operando em `self`:
 
 ```ruby
 # ./models/user.rb
@@ -452,7 +444,7 @@ end
 User.create(name: 'Ernane', age: 16) # Aciona os callbacks definidos anteriormente
 ```
 
-Os retornos de chamada "ao redor" (`around_create`, por exemplo) são um pouco mais complexos. Eles permitem que você execute código antes e depois de uma ação, podendo ser úteis para *benchmarking* de desempenho, por exemplo. Aqui está um exemplo de uso:
+Os retornos de chamada "*around*" (`around_create`, por exemplo) são um pouco mais complexos. Eles permitem que você execute código antes e depois de uma ação, podendo ser úteis para *benchmarking* de desempenho, por exemplo.
 
 ```ruby
 # ./models/user.rb
@@ -481,9 +473,9 @@ Ao adicionar validações a um modelo, você garante que qualquer objeto salvo a
 - Garantir o comprimento de um campo
 - Garantir que um campo seja um valor numérico
 - Garantir que um campo corresponda a uma expressão regular
-- Implementar funções de validação personalizadas
+- Implementar funções de validação personalizadas (*o céu é o limite, ou quase*)
 
-Após aplicar as validações, você pode chamar os métodos `.valid?` e `.invalid?` no modelo para realizar as validações e gerar mensagens de erro, que podem ser acessadas no modelo. A chamada também executará as validações e gerará mensagens de erro. Ela retornará falso se o salvamento não for bem-sucedido. Você pode aprender mais sobre validações em [Guia de Validações do ActiveRecord](https://guides.rubyonrails.org/active_record_validations.html).
+Após aplicar as validações, você pode chamar os métodos `.valid?` e `.invalid?` no modelo para realizar as validações e gerar mensagens de erro, que podem ser acessadas no modelo. A chamada também executará as validações e gerará mensagens de erro. Ela retornará `falso` se a operação não for bem-sucedido. Você pode aprender mais sobre validações no [Guia de Validações do ActiveRecord](https://guides.rubyonrails.org/active_record_validations.html).
 
 Aqui está um exemplo de modelo de usuário com algumas validações e como verificar erros:
 
@@ -518,7 +510,7 @@ class User < ActiveRecord::Base
   # Garantir que o valor corresponda a um conjunto específico
   validates_inclusion_of :tshirt_size, in: %w(PP P M G GG XG), message: "Tamanho de camiseta inválido: %{value}"
 
-  # Garantir que um número seja fornecido
+  # Garantir que o valor seja de um tipo específico
   validates_numericality_of :age, only_integer: true
   
   # ...
@@ -545,20 +537,19 @@ end
 
 Este exemplo garantirá que os dados inseridos no objeto de usuário atendam aos critérios de validação definidos no modelo. Se houver algum erro de validação, ele será exibido na saída.
 
-O texto está claro e aborda o conceito de transações de forma concisa. No entanto, podemos melhorar a clareza e a estrutura do texto. Aqui está uma versão aprimorada:
-
 ### Transações em Bancos de Dados
 
 O uso de transações em bancos de dados permite executar várias operações de forma segura, garantindo que todas sejam realizadas ou nenhuma delas seja concluída. Por exemplo, ao realizar operações complexas que envolvem múltiplas atualizações ou inserções, é crucial garantir a integridade do banco de dados, evitando estados inconsistentes.
 
-Você pode criar e executar transações em blocos de código utilizando o método `transaction` fornecido pelo ActiveRecord. Veja um exemplo:
+Você pode criar e executar transações em blocos de código utilizando o método `transaction` fornecido pelo `ActiveRecord`. Veja um exemplo:
 
 ```ruby
 # ./examples/testing_transactions.rb
 
-# Exemplo 1: Deve tentar mudar o nome e idade e falhar. 
-# Deve tentar mudar a idade e deve falhar pois o valor tem que ser inteiro. 
-# Como falhou as alterações já realizadas, mesmo que em sucesso, devem ser revertidas.
+# Exemplo 1: 
+# - Deve tentar mudar o nome e funcionar. 
+# - Deve tentar mudar a idade e deve falhar pois o valor tem que ser inteiro (validação presente no modelo). 
+# - Como falhou, as alterações já realizadas, mesmo que em sucesso, serão revertidas.
 
 begin
   ActiveRecord::Base.transaction do
@@ -578,8 +569,9 @@ end
 usuario = User.first
 puts "\nDepois 1 (nada muda) =>", usuario.attributes
 
-# Exemplo 2: Deve tentar mudar o nome e idade e funcionar. 
-# Deve tentar mudar a idade funcionar. Como não falhou, as alterações persistem.
+# Exemplo 2: 
+# - Deve tentar mudar o nome e idade e funcionar. 
+# - Como não falhou, as alterações persistem.
 
 ActiveRecord::Base.transaction do
   usuario = User.first
@@ -605,7 +597,7 @@ O uso de transações é essencial para garantir a integridade e consistência d
 
 ### Relacionamentos
 
-Associar modelos uns aos outros é um aspecto fundamental do ActiveRecord. Estes incluem relacionamentos como um para um, um para muitos e muitos para muitos.
+Associar modelos uns aos outros é um aspecto fundamental do `ActiveRecord`. Estes incluem relacionamentos como `um para um`, `um para muitos` e `muitos para muitos`.
 
 Os relacionamentos disponíveis entre os modelos são:
 
@@ -616,13 +608,13 @@ Os relacionamentos disponíveis entre os modelos são:
 - tem um através de (`has_one :through`)
 - tem e pertence a muitos (`has_and_belongs_to_many`)
 
-Há uma espécie de 'mágica' que acontece quando se trata da nomeação de tabelas. Você pode substituir os nomes das tabelas e os nomes das colunas de chave estrangeira, mas recomendo que tente seguir as convenções para evitar configurações. Por exemplo, se um `Perfil` pertence a um `Usuário`, ele assume que existem tabelas de usuários e perfis, e a tabela de perfis terá uma coluna `user_id`.
+Há uma espécie de 'mágica' ✨ que acontece quando se trata da nomeação de tabelas. Você pode substituir os nomes das tabelas e os nomes das colunas de chave estrangeira, mas é recomendado seguir as convenções para evitar configurações extras. Por exemplo, se um `Perfil` pertence a um `Usuário`, ele assume que existem tabelas de usuários e perfis, e a tabela de perfis terá uma coluna `user_id`.
 
-Tabelas de ligação para relacionamentos muitos para muitos usam o nome de ambos os modelos em ordem alfabética. Por exemplo, se um Usuário tem um relacionamento muitos para muitos com um Departamento, então a tabela de ligação é esperada para ser nomeada `departments_users` e conter colunas `user_id` e `department_id` que fazem referência às tabelas denominadas `departments` e `users`.
+Tabelas de ligação para relacionamentos `muitos para muitos` usam o nome de ambos os modelos em ordem alfabética. Por exemplo, se um **Usuário** tem um relacionamento muitos para muitos com um **Departamento**, então a tabela de ligação é esperada para ser nomeada `departments_users` e conter colunas `user_id` e `department_id` que fazem referência às tabelas denominadas `departments` e `users`.
 
 Neste exemplo, preste atenção especial à singularidade ou pluralidade das palavras usadas nos nomes dos modelos, nomes dos relacionamentos e nomes das tabelas do banco de dados. Ao usar um relacionamento `has_and_belongs_to_many`, a tabela de ligação usa plurais de ambos os nomes em ordem alfabética.
 
-> Nessa etapa será necessário criar novas tabelas para que o exemplo funcione e para que nós possamos realacionar as tabelas. Dessa forma, você pode se aventurar criando-as manualmente ou executar a migration presente [aqui](https://github.com/ErnaneJ/ruby-and-activerecord/blob/main/database/migrations/create_profiles_posts_and_departments_tables.rb).
+> Nessa etapa será necessário criar novas tabelas para que o exemplo funcione pois precisamos de mais tabelas para relacionar. Dessa forma, você pode se aventurar criando-as manualmente ou executar a migration presente [aqui](https://github.com/ErnaneJ/ruby-and-activerecord/blob/main/database/migrations/create_profiles_posts_and_departments_tables.rb).
 
 ```ruby
 # ./models/user.rb
@@ -653,6 +645,8 @@ class Department < ActiveRecord::Base
   has_and_belongs_to_many :users
 end
 ```
+
+Dessa forma, podemos realizar as seguintes execuções:
 
 ```ruby
 # main.rb
@@ -689,36 +683,36 @@ Você pode ler mais sobre associações acessando o [Guides](https://guides.ruby
 
 Para evitar a necessidade de escrever instruções SQL para criar, modificar e destruir esquemas de banco de dados, o ActiveRecord fornece um mecanismo para realizar migrações. Isso permite que você escreva código Ruby para especificar como deve ser a estrutura do banco de dados sem escrever SQL bruto.
 
-Existem alguns benefícios nisso. Por exemplo, você pode usar a mesma migração para criar o esquema de banco de dados para SQLite, MySQL e PostgreSQL, mesmo que as instruções SQL reais possam variar de banco de dados para banco de dados. Ele também permite que você execute atualizações, desmonte e reconstrua facilmente um banco de dados apenas executando os scripts de migração Ruby, que por sua vez podem ser configurados em um Rakefile por conveniência.
+Existem alguns benefícios nisso. Por exemplo, como comentado anteriormente, você pode usar a mesma migração para criar o esquema de banco de dados para SQLite, MySQL e PostgreSQL, mesmo que as instruções SQL reais possam variar de banco de dados para banco de dados. Ele também permite que você execute atualizações, desmonte e reconstrua facilmente um banco de dados apenas executando os scripts de migração Ruby, que por sua vez podem ser configurados em um `Rakefile` por conveniência.
 
 #### Métodos Disponíveis
 
 Ao definir classes de migração, estes são alguns dos métodos disponíveis que você pode usar para executar operações de banco de dados. Você pode ler mais sobre os métodos disponíveis [aqui](https://api.rubyonrails.org/classes/ActiveRecord/Migration.html).
 
-- create_table()
-- change_table()
-- rename_table()
-- drop_table()
-- create_join_table()
-- drop_join_table()
-- add_column()
-- change_column()
-- change_column_default()
-- change_column_null() *(permitir/proibir nulo)*
-- rename_column()
-- remove_column()
-- remove_columns()
-- add_timestamps() *(created_at e updated_at)*
-- remove_timestamps()
-- add_foreign_key()
-- remove_foreign_key()
-- add_index()
-- rename_index()
-- remove_index()
-- add_reference()
-- remove_reference()
+- `create_table()`
+- `change_table()`
+- `rename_table()`
+- `drop_table()`
+- `create_join_table()`
+- `drop_join_table()`
+- `add_column()`
+- `change_column()`
+- `change_column_default()`
+- `change_column_null()` *(permitir/proibir nulo)*
+- `rename_column()`
+- `remove_column()`
+- `remove_columns()`
+- `add_timestamps()` *(created_at e updated_at)*
+- `remove_timestamps()`
+- `add_foreign_key()`
+- `remove_foreign_key()`
+- `add_index()`
+- `rename_index()`
+- `remove_index()`
+- `add_reference()`
+- `remove_reference()`
 
-#### Diferença Entre `change()` e `up()`/`down()`
+#### Diferença Entre CHANGE() e UP()/DOWN()
 
 No início, pode ser um pouco confuso entender a necessidade desses dois métodos e você também pode estar se perguntando. Basicamente, se você definir migrações usando o método `change`, ele determinará automaticamente o que precisa ser feito para que as migrações `up` e `down` executem ou desfaçam as ações especificadas.
 
@@ -728,7 +722,7 @@ Se quiser especificar uma ação que funcione apenas em uma direção ou ter mai
 
 Este exemplo mostra como fazer uma migração simples que criará uma tabela chamada `users` com alguns campos: `name`, `age`, `created_at` e `updated_at`.
 
-Chame o método `migrate` da classe de migração para atualizar o banco de dados. Você deve fornecer uma `:up` ou `:down` direção para especificar se deseja executar as alterações ou desfazê-las. Ele determinará automaticamente quais instruções precisam ser executadas para realizar cada ação.
+Chame o método `migrate` da classe de migração para atualizar o banco de dados. Você deve fornecer uma direção (`:up` ou `:down`) para especificar se deseja executar as alterações ou desfazê-las. Ele determinará automaticamente quais instruções precisam ser executadas para realizar cada ação.
 
 ```ruby
 class CreateUserTable < ActiveRecord::Migration[5.2]
@@ -748,47 +742,19 @@ CreateUserTable.migrate(:up)
 CreateUserTable.migrate(:down)
 ```
 
-Se quiser criar ou eliminar a tabela somente quando ela estiver presente, você pode agrupar as operações com uma instrução condicional, como mostra o próximo exemplo. Este é um caso em que você desejaria especificar explicitamente as ações `up` e `down` em vez de confiar no `change` fornecimento automático de ambas as instruções.
-
-```ruby
-class CreateUserTable < ActiveRecord::Migration[5.2]
-  def up
-    unless ActiveRecord::Base.connection.table_exists?(:users)
-      create_table :users do |table|
-        table.string :name
-        table.integer :age
-        table.timestamps
-      end
-    end
-  end
-
-  def down
-    if ActiveRecord::Base.connection.table_exists?(:users)
-      drop_table :users
-    end
-  end
-end
-
-# Criar a tabela
-CreateUserTable.migrate(:up)
-
-# Eliminar a tabela
-CreateUserTable.migrate(:down)
-```
-
 ### Usando no IRB
 
-Ao usar o Ruby on Rails, você pode acessar o console do Rails com o comando `rails console` para entrar em um ambiente interativo que permite consultar e manipular seus modelos ActiveRecord. No entanto, se você estiver fora do ambiente Rails, precisará requerer os módulos Ruby onde seus modelos estão definidos.
+Ao usar o Ruby on Rails, você pode acessar o console do Rails com o comando `rails console` para entrar em um ambiente interativo que permite consultar e manipular seus modelos `ActiveRecord`. No entanto, se você estiver fora do ambiente Rails, precisará requerer os módulos Ruby onde seus modelos estão definidos.
 
-Você pode usar o argumento `-r` para exigir os módulos desejados na inicialização do IRB ou Pry. Isso economiza tempo, pois você não precisa digitar os comandos `require` manualmente dentro do interpretador. Certifique-se de importar quaisquer módulos que contenham seus modelos e informações de conexão com o banco de dados.
+Você pode usar o argumento `-r` para exigir os módulos desejados na inicialização do IRB. Isso economiza tempo, pois você não precisa digitar os comandos `require` manualmente dentro do interpretador.
 
 ```bash
-irb -r ./my_models -r ./my_other_module
+irb -r ./models
 ```
 
 Dessa forma, você pode iniciar o IRB com seus módulos já importados e prontos para uso.
 
-Alternativamente, você pode importar manualmente os módulos dentro do IRB digitando os comandos `require`. No entanto, criar um script com os comandos de `require` economiza tempo e esforço. Uma vez dentro do IRB, você pode usar seus modelos como de costume:
+Alternativamente, como dito, você pode importar manualmente os módulos dentro do IRB digitando os comandos `require`. No entanto, criar um script com os comandos de `require` economiza tempo e esforço. Uma vez dentro do IRB, você pode usar seus modelos como de costume:
 
 ```ruby
 $ irb
@@ -802,11 +768,11 @@ irb(main):004> User.last
 # => #<User:0x000000010bdb0630 ...> 
 ```
 
-Isso permite que você execute consultas e manipulações em seus modelos ActiveRecord diretamente do console interativo.
+Isso permite que você execute consultas e manipulações em seus modelos `ActiveRecord` diretamente do console interativo.
 
 ## Conclusão 🎉
 
-Após absorver este tutorial, você agora possui um entendimento sólido dos fundamentos do ActiveRecord. Agora, você deve se sentir confiante para instalar o ActiveRecord, explorar sua documentação e começar a utilizá-lo em seus projetos Ruby.
+Após absorver este tutorial, você agora possui um entendimento sólido dos fundamentos do `ActiveRecord`. Agora, você deve se sentir confiante para instalar o `ActiveRecord`, explorar sua documentação e começar a utilizá-lo em seus projetos Ruby.
 
 Aqui está um resumo do que foi aprendido:
 
@@ -820,5 +786,7 @@ Aqui está um resumo do que foi aprendido:
 - Utilização do ActiveRecord em uma sessão interativa no IRB ou Pry.
 
 Com esses conhecimentos, você está pronto para aproveitar ao máximo o ActiveRecord em seus projetos Ruby, facilitando o trabalho com bancos de dados e simplificando o desenvolvimento de aplicativos web. Lembre-se de continuar explorando a documentação oficial e praticar com exemplos do mundo real para aprimorar suas habilidades. 🚀
+
+O [repositório](https://github.com/ErnaneJ/ruby-and-activerecord/) com os exemplos mencionados neste post está disponível e totalmente aberto a contribuições. Além disso, esta publicação também. Sinta-se à vontade!
 
 Espero que tenha gostado dessa postagem e que ela tenha te ajudado, de alguma forma, a encontrar ou que você procurava! 💙
