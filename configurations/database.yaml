@@ -1,0 +1,3 @@
+# configurations/database.yaml
+adapter: 'sqlite3'
+database: './database/database.sqlite3'
