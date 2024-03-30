@@ -1,3 +1,5 @@
+# [pt-BR] Guia Prático: Explorando o Poder da Gem ActiveRecord no Ruby - Sem Framework 🚀
+
 > Recentemente, tive contato com alguns novos entusiastas do Ruby que provavelmente em breve estarão explorando o Rails, dado o caminho que estão seguindo. Acredito que, uma vez que tenhamos uma compreensão básica de Ruby e a linguagem devidamente instalada, é vantajoso explorarmos o Active Record, uma poderosa gem que simplifica significativamente as operações no banco de dados. Dedico este conteúdo a vocês.
 
 ## Introdução 🎉
@@ -112,7 +114,7 @@ gem "activerecord", "~> 7.1"
 gem "sqlite3", "~> 1.7"
 ```
 
-### Estabelecendo Conexão com o Banco de Dados SQLite
+### Estabelecendo Conexão com o Banco de Dados SQLite 🪶
 
 Para uma melhor organização, criaremos uma pasta de configurações e dentro dela um arquivo `initializer.rb`. Este arquivo será responsável por realizar a conexão com o banco de dados. Para simplificar o processo de configuração, também optaremos por criar um arquivo `.yaml` para armazenar as configurações do banco de dados fora do código.
 
@@ -196,7 +198,13 @@ Você pode notar que recebeu um erro porque nossa tabela `users` não existe no 
 Para criar a tabela, você pode executar a criação manualmente em SQL. Por exemplo:
 
 ```sql
-CREATE TABLE IF NOT EXISTS users (name TEXT, age INT);
+CREATE TABLE IF NOT EXISTS users (
+  name TEXT,
+  age INT,
+  email TEXT,
+  admin BOOLEAN,
+  tshirt_size TEXT
+);
 ```
 
 Ou, se quiser adiantar um pouco no conteúdo, você pode criar uma migração.
@@ -248,15 +256,13 @@ User.columns.each do |column|
 end
 ```
 
-### Criando Novos Registros
+### Criando Novos Registros 🆕
 
 Existem várias maneiras de criar um novo registro:
 
 - Criar um novo objeto e chamar explicitamente o método `.save()`;
 - Usar um bloco para preencher o objeto e chamar o método `.save()`;
 - Chamar `.create()` que criará e salvará em uma única etapa;
-
-Aqui estão alguns exemplos de como isso é feito:
 
 ```ruby
 # ./examples/creating_new_records.rb
@@ -278,20 +284,18 @@ end.save
 User.create(name: 'ErnaneTres', age: 18, email: 'teste2@teste.com', admin: false, tshirt_size: 'M')
 ```
 
-### Encontrando Registros
+### Encontrando Registros 🔍
 
 Existem muitos métodos que você pode usar para consultar registros. Alguns deles incluem:
 
-- `first()`
+- `first()`;
 - `last()`
-- `second()`, `third()`, `fourth()`, `fifth()`
-- `all()`
-- `where()`
-- `find_by()`
-- `find_by_sql()`
-- `find_by_*()`
-
-Aqui está um exemplo de como utilizá-los:
+- `second()`, `third()`, `fourth()`, `fifth()`;
+- `all()`;
+- `where()`;
+- `find_by()`;
+- `find_by_sql()`;
+- `find_by_*()`.
 
 ```ruby
 # ./examples/finding_records.rb
@@ -306,16 +310,16 @@ puts ultimo_usuario.name
 
 # Também disponível: User.second, User.third, User.fourth, User.fifth
 
-# Encontrar o primeiro usuário que corresponde à consulta
-usuario = User.find_by(name: 'nomeNovo')
-puts usuario.name
-
 # Encontrar todos os usuários que correspondem à consulta e depois pegar o primeiro da lista
 adultos = User.where('age > ?', 18)
 puts "Adultos: #{adultos.length}"
 
 # Obter todos os usuários
 puts "Total de usuários: #{User.all.length}"
+
+# Encontrar o primeiro usuário que corresponde à consulta
+usuario = User.find_by(name: 'nomeNovo')
+puts usuario.name
 
 # Obter todos os usuários e classificar
 usuarios_classificados = User.all.order(age: :desc)
@@ -336,7 +340,7 @@ end
 
 Acesse o [Guia do Ruby](https://guides.rubyonrails.org/active_record_querying.html) para obter mais informações.
 
-### Atualizando Registros
+### Atualizando Registros 🔄
 
 Para atualizar um registro, você também tem algumas opções. Uma delas é obter o registro, modificá-lo e, em seguida, chamá-lo explicitamente. Outra opção é chamar o método `update()` para fazer a alteração e salvar em uma única ação.
 
@@ -352,7 +356,7 @@ usuario.save
 User.first.update(name: 'nomeNovo')
 ```
 
-### Excluindo Registros
+### Excluindo Registros ␡
 
 Para excluir um registro, você pode acessar um registro individual ou chamar métodos para excluir todos os registros. Aqui estão alguns exemplos:
 
@@ -366,7 +370,7 @@ User.all.each { |usuario| usuario.delete } # ou ainda => User.all.each(&:delete)
 User.delete_all
 ```
 
-### Funções de Retorno de Chamada
+### Funções de Retorno de Chamada 👀
 
 Existem vários métodos que você pode adicionar em modelo que serão acionados automaticamente quando determinadas ações forem executadas, como `criar`, `atualizar` ou `excluir` um registro, além de `consultar` um registro.
 
@@ -374,34 +378,34 @@ Saiba mais sobre retornos de chamada em [Ruby on Rails Guides](https://guides.ru
 
 Esses métodos de retorno de chamada podem ser classificados em diferentes categorias:
 
-#### Ações de Criação:
+#### 📍 Ação de Exclusão:
 
-- `before_create`
-- `after_create`
+- `before_destroy`;
+- `after_destroy`.
 
-#### Ações de Criação e Atualização:
+#### 📍 Ações de Criação:
 
-- `before_validation`
-- `after_validation`
-- `before_update`
-- `after_update`
-- `before_save`
-- `after_save`
+- `before_create`;
+- `after_create`.
 
-#### Ação de Exclusão:
+#### 📍 Ações de Criação e Atualização:
 
-- `before_destroy`
-- `after_destroy`
+- `before_validation`;
+- `after_validation`;
+- `before_update`;
+- `after_update`;
+- `before_save`;
+- `after_save`.
 
-#### Ações de Criação, Atualização e Exclusão:
+#### 📍 Ações de Consulta:
 
-- `after_commit`
-- `after_rollback`
+- `after_initialize`;
+- `after_find`.
 
-#### Ações de Consulta:
+#### 📍 Ações de Criação, Atualização e Exclusão:
 
-- `after_initialize`
-- `after_find`
+- `after_commit`;
+- `after_rollback`.
 
 Aqui está um exemplo de como configurar um retorno de chamada usando blocos:
 
@@ -462,20 +466,18 @@ end
 User.create(name: 'Ernane', age: 16) # Aciona o callback definido anteriormente
 ```
 
-### Validação de Campos
+### Validação de Campos ✅
 
 Ao adicionar validações a um modelo, você garante que qualquer objeto salvo atenda a determinados padrões. Existem várias validações integradas disponíveis. Aqui estão alguns exemplos de validações que você pode aplicar:
 
-- Garantir que um campo esteja vazio ou não vazio
-- Garantir que um campo contenha um valor exclusivo
-- Garantir o comprimento de um campo
-- Garantir que um campo seja um valor numérico
-- Garantir que um campo corresponda a uma expressão regular
-- Implementar funções de validação personalizadas (*o céu é o limite, ou quase*)
+- Garantir que um campo esteja vazio ou não vazio;
+- Garantir que um campo contenha um valor exclusivo;
+- Garantir o comprimento de um campo;
+- Garantir que um campo seja um valor numérico;
+- Garantir que um campo corresponda a uma expressão regular;
+- Implementar funções de validação personalizadas (*o céu é o limite, ou quase*).
 
 Após aplicar as validações, você pode chamar os métodos `.valid?` e `.invalid?` no modelo para realizar as validações e gerar mensagens de erro, que podem ser acessadas no modelo. A chamada também executará as validações e gerará mensagens de erro. Ela retornará `falso` se a operação não for bem-sucedido. Você pode aprender mais sobre validações no [Guia de Validações do ActiveRecord](https://guides.rubyonrails.org/active_record_validations.html).
-
-Aqui está um exemplo de modelo de usuário com algumas validações e como verificar erros:
 
 ```ruby
 # ./models/user.rb
@@ -484,33 +486,33 @@ class User < ActiveRecord::Base
 
   # ...
 
+  # Garantir que os campos de nome e idade estejam presentes
+  validates_presence_of :name, :age
+
+  # Garantir que um campo seja único
+  validates_uniqueness_of :email
+
+  # Usar uma expressão regular para limitar os valores do campo
+  validates_format_of :name, with: /\A[a-zA-Z]+\z/, message: "Apenas letras são permitidas"
+
   # Garantir que um campo esteja vazio
   validates_absence_of :admin
 
-  # Garantir que os campos de nome e idade estejam presentes
-  validates_presence_of :name, :age
-  
-  # Usar uma expressão regular para limitar os valores do campo
-  validates_format_of :name, with: /\A[a-zA-Z]+\z/, message: "Apenas letras são permitidas"
-  
+  # Garantir que um valor tenha um comprimento específico
+  validates_length_of :credit_card, is: 16
+
+  # Garantir que o valor seja de um tipo específico
+  validates_numericality_of :age, only_integer: true
+
   # Garantir um comprimento mínimo e máximo
   validates_length_of :name, minimum: 2, maximum: 64
   
   # Outra forma de especificar o comprimento
   validates_length_of :name, in: 2..64
 
-  # Garantir que um valor tenha um comprimento específico
-  validates_length_of :credit_card, is: 16
-
-  # Garantir que um campo seja único
-  validates_uniqueness_of :email
-
   # Garantir que o valor corresponda a um conjunto específico
   validates_inclusion_of :tshirt_size, in: %w(PP P M G GG XG), message: "Tamanho de camiseta inválido: %{value}"
 
-  # Garantir que o valor seja de um tipo específico
-  validates_numericality_of :age, only_integer: true
-  
   # ...
 end
 ```
@@ -535,7 +537,7 @@ end
 
 Este exemplo garantirá que os dados inseridos no objeto de usuário atendam aos critérios de validação definidos no modelo. Se houver algum erro de validação, ele será exibido na saída.
 
-### Transações em Bancos de Dados
+### Transações em Bancos de Dados 🎲
 
 O uso de transações em bancos de dados permite executar várias operações de forma segura, garantindo que todas sejam realizadas ou nenhuma delas seja concluída. Por exemplo, ao realizar operações complexas que envolvem múltiplas atualizações ou inserções, é crucial garantir a integridade do banco de dados, evitando estados inconsistentes.
 
@@ -563,7 +565,7 @@ rescue ActiveRecord::RecordInvalid => e
   puts "\nErro ao salvar: #{e.message}\n"
 end
 
-# nada muda
+# ❌ Nada muda
 usuario = User.first
 puts "\nDepois 1 (nada muda) =>", usuario.attributes
 
@@ -581,6 +583,7 @@ ActiveRecord::Base.transaction do
   usuario.save!
 end
 
+# ✅ As alterações persistem
 # Agora nome e idade foram alterados
 usuario = User.first
 puts "\nDepois 2 =>", usuario.attributes
@@ -593,20 +596,20 @@ Além disso, você não está limitado a operar apenas no modelo associado ao bl
 
 O uso de transações é essencial para garantir a integridade e consistência dos dados em aplicações que envolvem operações críticas no banco de dados.
 
-### Relacionamentos
+### Relacionamentos ↔️
 
 Associar modelos uns aos outros é um aspecto fundamental do `ActiveRecord`. Estes incluem relacionamentos como `um para um`, `um para muitos` e `muitos para muitos`.
 
 Os relacionamentos disponíveis entre os modelos são:
 
-- pertence a (`belongs_to`)
-- tem um (`has_one`)
-- tem muitos (`has_many`)
-- tem muitos através de (`has_many :through`)
-- tem um através de (`has_one :through`)
-- tem e pertence a muitos (`has_and_belongs_to_many`)
+- pertence a (`belongs_to`);
+- tem um (`has_one`);
+- tem muitos (`has_many`);
+- tem muitos através de (`has_many :through`);
+- tem um através de (`has_one :through`);
+- tem e pertence a muitos (`has_and_belongs_to_many`).
 
-Há uma espécie de 'mágica' ✨ que acontece quando se trata da nomeação de tabelas. Você pode substituir os nomes das tabelas e os nomes das colunas de chave estrangeira, mas é recomendado seguir as convenções para evitar configurações extras. Por exemplo, se um `Perfil` pertence a um `Usuário`, ele assume que existem tabelas de usuários e perfis, e a tabela de perfis terá uma coluna `user_id`.
+Há uma espécie de '_mágica_' ✨ que acontece quando se trata da nomeação de tabelas. Você pode substituir os nomes das tabelas e os nomes das colunas de chave estrangeira, mas é recomendado seguir as convenções para evitar configurações extras. Por exemplo, se um `Perfil` pertence a um `Usuário`, ele assume que existem tabelas de usuários e perfis, e a tabela de perfis terá uma coluna `user_id`.
 
 Tabelas de ligação para relacionamentos `muitos para muitos` usam o nome de ambos os modelos em ordem alfabética. Por exemplo, se um **Usuário** tem um relacionamento muitos para muitos com um **Departamento**, então a tabela de ligação é esperada para ser nomeada `departments_users` e conter colunas `user_id` e `department_id` que fazem referência às tabelas denominadas `departments` e `users`.
 
@@ -677,46 +680,46 @@ puts usuario.clans.inspect
 
 Você pode ler mais sobre associações acessando o [Guides](https://guides.rubyonrails.org/association_basics.html).
 
-### Migrações
+### Migrações 🗄️
 
 Para evitar a necessidade de escrever instruções SQL para criar, modificar e destruir esquemas de banco de dados, o ActiveRecord fornece um mecanismo para realizar migrações. Isso permite que você escreva código Ruby para especificar como deve ser a estrutura do banco de dados sem escrever SQL bruto.
 
 Existem alguns benefícios nisso. Por exemplo, como comentado anteriormente, você pode usar a mesma migração para criar o esquema de banco de dados para SQLite, MySQL e PostgreSQL, mesmo que as instruções SQL reais possam variar de banco de dados para banco de dados. Ele também permite que você execute atualizações, desmonte e reconstrua facilmente um banco de dados apenas executando os scripts de migração Ruby, que por sua vez podem ser configurados em um `Rakefile` por conveniência.
 
-#### Métodos Disponíveis
+#### Métodos Disponíveis 📋
 
 Ao definir classes de migração, estes são alguns dos métodos disponíveis que você pode usar para executar operações de banco de dados. Você pode ler mais sobre os métodos disponíveis [aqui](https://api.rubyonrails.org/classes/ActiveRecord/Migration.html).
 
-- `create_table()`
-- `change_table()`
-- `rename_table()`
-- `drop_table()`
-- `create_join_table()`
-- `drop_join_table()`
-- `add_column()`
-- `change_column()`
-- `change_column_default()`
-- `change_column_null()` *(permitir/proibir nulo)*
-- `rename_column()`
-- `remove_column()`
-- `remove_columns()`
-- `add_timestamps()` *(created_at e updated_at)*
-- `remove_timestamps()`
-- `add_foreign_key()`
-- `remove_foreign_key()`
-- `add_index()`
-- `rename_index()`
-- `remove_index()`
-- `add_reference()`
-- `remove_reference()`
+- `create_table()`;
+- `change_table()`;
+- `rename_table()`;
+- `drop_table()`;
+- `create_join_table()`;
+- `drop_join_table()`;
+- `add_column()`;
+- `change_column()`;
+- `change_column_default()`;
+- `change_column_null()` *(permitir/proibir nulo)*;
+- `rename_column()`;
+- `remove_column()`;
+- `remove_columns()`;
+- `add_timestamps()` *(created_at e updated_at)*;
+- `remove_timestamps()`;
+- `add_foreign_key()`;
+- `remove_foreign_key()`;
+- `add_index()`;
+- `rename_index()`;
+- `remove_index()`;
+- `add_reference()`;
+- `remove_reference()`.
 
-#### Diferença Entre CHANGE() e UP()/DOWN()
+#### Diferença Entre CHANGE() e UP()/DOWN() ⁉️
 
 No início, pode ser um pouco confuso entender a necessidade desses dois métodos e você também pode estar se perguntando. Basicamente, se você definir migrações usando o método `change`, ele determinará automaticamente o que precisa ser feito para que as migrações `up` e `down` executem ou desfaçam as ações especificadas.
 
 Se quiser especificar uma ação que funcione apenas em uma direção ou ter mais controle, você poderá definir explicitamente os métodos `.up` e `.down`. Eu usaria o padrão, `change`, a menos que você tenha alguma necessidade especial.
 
-#### Criar e Eliminar Tabelas
+#### Criar e Eliminar Tabelas 🧑🏼‍💻
 
 Este exemplo mostra como fazer uma migração simples que criará uma tabela chamada `users` com alguns campos: `name`, `age`, `created_at` e `updated_at`.
 
@@ -740,7 +743,7 @@ CreateUserTable.migrate(:up)
 CreateUserTable.migrate(:down)
 ```
 
-### Usando no IRB
+### Usando no IRB 🖥️
 
 Ao usar o Ruby on Rails, você pode acessar o console do Rails com o comando `rails console` para entrar em um ambiente interativo que permite consultar e manipular seus modelos `ActiveRecord`. No entanto, se você estiver fora do ambiente Rails, precisará requerer os módulos Ruby onde seus modelos estão definidos.
 
