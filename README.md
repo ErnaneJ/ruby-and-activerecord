@@ -663,10 +663,10 @@ usuario.posts.create(content: 'Post de exemplo')
 Post.create(content: 'Outro post', user: usuario)
 usuario.posts.append(Post.create(content: 'Um terceiro post'))
 
-# Criar os clãs e relacionamentos (relacionamento muitos para muitos)
-usuario.clans.create(name: 'Belgian ROFLs')
-Clan.create(name: 'Hax0rs', users: [usuario])
-usuario.clans.append(Clan.create(name: 'Lone Rangers'))
+# Criar os departamentos e relacionamentos (relacionamento muitos para muitos)
+usuario.departments.create(name: 'TI')
+Department.create(name: 'Vendas', users: [usuario])
+usuario.departments.append(Department.create(name: 'RH'))
 
 # Obtendo os objetos relacionados
 usuario = User.find_by_name('Ernane')
@@ -674,8 +674,8 @@ puts usuario.inspect
 puts usuario.profile.inspect
 puts usuario.post_ids.inspect
 puts usuario.posts.inspect
-puts usuario.clan_ids.inspect
-puts usuario.clans.inspect
+puts usuario.department_ids.inspect
+puts usuario.departments.inspect
 ```
 
 Você pode ler mais sobre associações acessando o [Guides](https://guides.rubyonrails.org/association_basics.html).
